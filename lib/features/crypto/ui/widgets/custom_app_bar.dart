@@ -1,14 +1,16 @@
+import 'package:cryptox_app/features/crypto/providers/crypto_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class CustomAppBar extends StatelessWidget {
+class CustomAppBar extends ConsumerWidget {
   const CustomAppBar({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.only(left: 8,right: 8,bottom: 16),
+          padding: const EdgeInsets.only(left: 8, right: 8, bottom: 16),
           child: Row(
             mainAxisAlignment: .spaceBetween,
             children: [
@@ -20,19 +22,18 @@ class CustomAppBar extends StatelessWidget {
                   fontWeight: .bold,
                 ),
               ),
-          
+
               IconButton(
-                onPressed: () {},
-                icon: Icon(
-                  Icons.refresh, 
-                  color: Color(0xff808999)
-                  ),
+                onPressed: () {
+                  ref.refresh(cryptoProvider);
+                },
+                icon: Icon(Icons.refresh, color: Color(0xff808999)),
               ),
             ],
           ),
         ),
-    
-        Container(height: 1,color: Color(0xff313540),)
+
+        Container(height: 1, color: Color(0xff313540)),
       ],
     );
   }

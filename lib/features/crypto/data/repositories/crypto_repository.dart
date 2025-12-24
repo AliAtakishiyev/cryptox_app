@@ -17,6 +17,7 @@ class CryptoRepository {
           'vs_currency': 'usd',
           'order': 'market_cap_desc',
           'per_page': 10,
+          'price_change_percentage': '24h',
           'page': 1,
         },
       );

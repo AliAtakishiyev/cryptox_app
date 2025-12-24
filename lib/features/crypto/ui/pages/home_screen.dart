@@ -25,6 +25,7 @@ class HomeScreen extends ConsumerWidget {
                     itemCount: cryptos.length,
                     itemBuilder: (context, index) {
                       final crypto = cryptos[index];
+                      final change = crypto.priceChangePercentage24h;
                       return Padding(
                         padding: const EdgeInsets.symmetric(vertical: 12),
                         child: Column(
@@ -43,9 +44,9 @@ class HomeScreen extends ConsumerWidget {
                                         Icon(Icons.error),
                                   ),
                                 ),
-                            
+
                                 SizedBox(width: 12),
-                            
+
                                 Expanded(
                                   child: Row(
                                     mainAxisAlignment: .spaceBetween,
@@ -60,7 +61,7 @@ class HomeScreen extends ConsumerWidget {
                                               fontSize: 20,
                                             ),
                                           ),
-                                  
+
                                           Text(
                                             crypto.symbol.toUpperCase(),
                                             style: TextStyle(
@@ -70,7 +71,7 @@ class HomeScreen extends ConsumerWidget {
                                           ),
                                         ],
                                       ),
-                                  
+
                                       Column(
                                         crossAxisAlignment: .end,
                                         children: [
@@ -81,11 +82,15 @@ class HomeScreen extends ConsumerWidget {
                                               fontSize: 20,
                                             ),
                                           ),
-                                  
+
                                           Text(
-                                            ("+${crypto.priceChangePercentage24h}%"),
+                                            ((change < 0)
+                                                ? "${change.toStringAsFixed(2)}%"
+                                                : "+${change.toStringAsFixed(2)}%"),
                                             style: TextStyle(
-                                              color: Color(0xff24C25F),
+                                              color: (change < 0)
+                                                  ? Color(0xffD42727)
+                                                  : Color(0xff24C25F),
                                               fontSize: 16,
                                             ),
                                           ),
@@ -96,15 +101,10 @@ class HomeScreen extends ConsumerWidget {
                                 ),
                               ],
                             ),
-                            SizedBox(height: 8,),
+                            SizedBox(height: 8),
 
-                            Container(
-                              color: Color(0xff313540),
-                              height: 1,
-                            )
+                            Container(color: Color(0xff313540), height: 1),
                           ],
-
-                          
                         ),
                       );
                     },
