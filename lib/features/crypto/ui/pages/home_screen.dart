@@ -112,9 +112,22 @@ class HomeScreen extends ConsumerWidget {
                 ),
               ),
               error: (e, _) => Expanded(
-                child: Text(
-                  e.toString(),
-                  style: TextStyle(color: Colors.white),
+                child: Center(
+                  child: SizedBox(
+                    width: 120,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        ref.refresh(cryptoProvider);
+                      },
+                      child: Row(
+                        mainAxisAlignment: .center,
+                        children: [
+                          Icon(Icons.refresh, color: Colors.black),
+                          Text("Retry", style: TextStyle(color: Colors.black)),
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
               ),
               loading: () => Expanded(
