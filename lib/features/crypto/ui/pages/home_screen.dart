@@ -21,93 +21,100 @@ class HomeScreen extends ConsumerWidget {
               data: (cryptos) => Expanded(
                 child: Padding(
                   padding: const EdgeInsets.all(32.0),
-                  child: ListView.builder(
-                    itemCount: cryptos.length,
-                    itemBuilder: (context, index) {
-                      final crypto = cryptos[index];
-                      final change = crypto.priceChangePercentage24h;
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                        child: Column(
-                          children: [
-                            Row(
-                              children: [
-                                ClipOval(
-                                  child: CachedNetworkImage(
-                                    imageUrl: crypto.imageUrl,
-                                    width: 45,
-                                    height: 45,
-                                    fit: BoxFit.cover,
-                                    placeholder: (context, url) =>
-                                        CircularProgressIndicator(),
-                                    errorWidget: (context, url, error) =>
-                                        Icon(Icons.error),
-                                  ),
-                                ),
-
-                                SizedBox(width: 12),
-
-                                Expanded(
-                                  child: Row(
-                                    mainAxisAlignment: .spaceBetween,
-                                    children: [
-                                      Column(
-                                        crossAxisAlignment: .start,
-                                        children: [
-                                          Text(
-                                            crypto.name,
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 20,
-                                            ),
-                                          ),
-
-                                          Text(
-                                            crypto.symbol.toUpperCase(),
-                                            style: TextStyle(
-                                              color: Color(0xff808999),
-                                              fontSize: 20,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-
-                                      Column(
-                                        crossAxisAlignment: .end,
-                                        children: [
-                                          Text(
-                                            crypto.price.toString(),
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 20,
-                                            ),
-                                          ),
-
-                                          Text(
-                                            ((change < 0)
-                                                ? "${change.toStringAsFixed(2)}%"
-                                                : "+${change.toStringAsFixed(2)}%"),
-                                            style: TextStyle(
-                                              color: (change < 0)
-                                                  ? Color(0xffD42727)
-                                                  : Color(0xff24C25F),
-                                              fontSize: 16,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: 8),
-
-                            Container(color: Color(0xff313540), height: 1),
-                          ],
-                        ),
-                      );
+                  child: RefreshIndicator(
+                    color: Colors.black,
+                    onRefresh: () async {
+                      ref.refresh(cryptoProvider);
+                      await ref.read(cryptoProvider.future);
                     },
+                    child: ListView.builder(
+                      itemCount: cryptos.length,
+                      itemBuilder: (context, index) {
+                        final crypto = cryptos[index];
+                        final change = crypto.priceChangePercentage24h;
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          child: Column(
+                            children: [
+                              Row(
+                                children: [
+                                  ClipOval(
+                                    child: CachedNetworkImage(
+                                      imageUrl: crypto.imageUrl,
+                                      width: 45,
+                                      height: 45,
+                                      fit: BoxFit.cover,
+                                      placeholder: (context, url) =>
+                                          CircularProgressIndicator(),
+                                      errorWidget: (context, url, error) =>
+                                          Icon(Icons.error),
+                                    ),
+                                  ),
+
+                                  SizedBox(width: 12),
+
+                                  Expanded(
+                                    child: Row(
+                                      mainAxisAlignment: .spaceBetween,
+                                      children: [
+                                        Column(
+                                          crossAxisAlignment: .start,
+                                          children: [
+                                            Text(
+                                              crypto.name,
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 20,
+                                              ),
+                                            ),
+
+                                            Text(
+                                              crypto.symbol.toUpperCase(),
+                                              style: TextStyle(
+                                                color: Color(0xff808999),
+                                                fontSize: 20,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+
+                                        Column(
+                                          crossAxisAlignment: .end,
+                                          children: [
+                                            Text(
+                                              crypto.price.toString(),
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 20,
+                                              ),
+                                            ),
+
+                                            Text(
+                                              ((change < 0)
+                                                  ? "${change.toStringAsFixed(2)}%"
+                                                  : "+${change.toStringAsFixed(2)}%"),
+                                              style: TextStyle(
+                                                color: (change < 0)
+                                                    ? Color(0xffD42727)
+                                                    : Color(0xff24C25F),
+                                                fontSize: 16,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 8),
+
+                              Container(color: Color(0xff313540), height: 1),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ),
               ),
