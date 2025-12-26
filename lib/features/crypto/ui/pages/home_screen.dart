@@ -44,8 +44,13 @@ class HomeScreen extends ConsumerWidget {
                                       width: 45,
                                       height: 45,
                                       fit: BoxFit.cover,
-                                      placeholder: (context, url) =>
-                                          CircularProgressIndicator(),
+                                      placeholder: (context, url) =>Container(
+                                        width: 45,
+                                        height: 45,
+                                        color: Colors.grey[800],
+                                        child: Center(child: CircularProgressIndicator(strokeWidth: 2,),)
+                                      ),
+                                          
                                       errorWidget: (context, url, error) =>
                                           Icon(Icons.error),
                                     ),
